@@ -1,0 +1,63 @@
+<h2>Support Dashboard</h2>
+
+<h3>Statistics</h3>
+
+<ul>
+    <li>Total Tickets: {{ total }}</li>
+    <li>Open: {{ open }}</li>
+    <li>Assigned: {{ assigned }}</li>
+    <li>Resolved: {{ resolved }}</li>
+    <li>Closed: {{ closed }}</li>
+</ul>
+
+<h3>Recent Tickets</h3>
+
+<table border="1" cellpadding="5">
+<tr>
+<th>Ticket</th>
+<th>Company</th>
+<th>Type</th>
+<th>Issue</th>
+<th>Description</th>
+<th>Status</th>
+<th>Assigned To</th>
+<th>Created Time</th>
+<th>Assigned Time</th>
+</tr>
+
+{% for t in recent %}
+<tr>
+<td>{{ t.ticket_number }}</td>
+
+<td>{{ t.client.org_name }}</td>
+
+<td>{{ t.client.company_type }}</td>
+
+<td>{{ t.issue }}</td>
+
+<td>{{ t.description }}</td>
+
+<td>{{ t.status }}</td>
+
+<td>
+{% if t.assigned_to %}
+{{ t.assigned_to.name }}
+{% else %}
+Not Assigned
+{% endif %}
+</td>
+
+<td>{{ t.created_at|date:"M d, Y H:i" }}</td>
+
+<td>
+{% if t.assigned_at %}
+{{ t.assigned_at|date:"M d, Y H:i" }}
+{% else %}
+—
+{% endif %}
+</td>
+
+</tr>
+{% endfor %}
+
+</table>

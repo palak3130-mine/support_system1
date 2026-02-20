@@ -1,0 +1,48 @@
+<h2>Create Ticket</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Issue:</label>
+    <select name="issue" id="issue-dropdown">
+        <option value="">Select Issue</option>
+        {% for issue in issues %}
+        <option value="{{ issue.id }}">{{ issue.name }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Sub Issue:</label>
+    <select name="sub_issue" id="sub-issue-dropdown">
+        <option value="">Select Sub Issue</option>
+    </select>
+    <br><br>
+
+    <label>Description:</label>
+    <textarea name="description"></textarea>
+    <br><br>
+
+    <button type="submit">Submit Ticket</button>
+</form>
+
+<script>
+document.getElementById('issue-dropdown').addEventListener('change', function() {
+
+    const issueId = this.value;
+
+    fetch(`/tickets/get-sub-issues/?issue_id=${issueId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            let subDropdown = document.getElementById('sub-issue-dropdown');
+            subDropdown.innerHTML = '<option value="">Select Sub Issue</option>';
+
+            data.forEach(sub => {
+                let option = document.createElement('option');
+                option.value = sub.id;
+                option.textContent = sub.name;
+                subDropdown.appendChild(option);
+            });
+        });
+});
+</script>

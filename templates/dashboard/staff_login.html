@@ -1,0 +1,11 @@
+<h2>Staff Login</h2>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Enter email">
+    <button type="submit">Login</button>
+</form>

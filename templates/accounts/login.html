@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Login</title>
+</head>
+<body>
+
+<h2>Client Login</h2>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <label>User ID:</label>
+    <input type="text" name="user_id"><br><br>
+
+    <label>Password:</label>
+    <input type="password" name="password"><br><br>
+
+    <button type="submit">Login</button>
+</form>
+
+</body>
+</html>
