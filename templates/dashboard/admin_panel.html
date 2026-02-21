@@ -27,7 +27,11 @@
 
 {% for t in recent %}
 <tr>
-<td>{{ t.ticket_number }}</td>
+<td>
+<a href="/staff/ticket/{{ t.id }}/">
+{{ t.ticket_number }}
+</a>
+</td>
 
 <td>{{ t.client.org_name }}</td>
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket, IssueCategory, SubIssue
+from .models import Ticket, IssueCategory, SubIssue, TicketActivity
 from dashboard.models import Staff
 
 
@@ -27,3 +27,4 @@ class TicketAdmin(admin.ModelAdmin):
 
 admin.site.register(IssueCategory)
 admin.site.register(SubIssue)
+admin.site.register(TicketActivity)

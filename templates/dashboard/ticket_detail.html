@@ -1,0 +1,87 @@
+<h2>Ticket Detail</h2>
+
+<hr>
+
+<h3>Ticket Info</h3>
+<p><strong>Ticket Number:</strong> {{ ticket.ticket_number }}</p>
+<p><strong>Status:</strong> {{ ticket.status }}</p>
+<p><strong>Issue:</strong> {{ ticket.issue }}</p>
+<p><strong>Sub Issue:</strong> {{ ticket.sub_issue }}</p>
+
+<hr>
+
+<h3>Company Info</h3>
+<p><strong>Company:</strong> {{ ticket.client.org_name }}</p>
+<p><strong>Type:</strong> {{ ticket.client.company_type }}</p>
+<p><strong>Email:</strong> {{ ticket.client.email }}</p>
+<p><strong>Phone:</strong> {{ ticket.client.phone }}</p>
+
+<hr>
+
+<h3>Description</h3>
+<p>{{ ticket.description }}</p>
+
+{% if ticket.status != 'CLOSED' %}
+<hr>
+<h3>Update Status</h3>
+
+<a href="/staff/ticket/{{ ticket.id }}/status/IN_PROGRESS/">
+<button>🟡 Start Work</button>
+</a>
+
+<a href="/staff/ticket/{{ ticket.id }}/status/RESOLVED/">
+<button>🟢 Resolve</button>
+</a>
+
+<a href="/staff/ticket/{{ ticket.id }}/status/CLOSED/">
+<button>⚫ Close Ticket</button>
+</a>
+{% else %}
+<p><strong>This ticket is closed and cannot be modified.</strong></p>
+{% endif %}
+
+<hr>
+
+<h3>Assignment Info</h3>
+
+<p><strong>Assigned To:</strong>
+{% if ticket.assigned_to %}
+{{ ticket.assigned_to.name }}
+{% else %}
+Not Assigned
+{% endif %}
+</p>
+
+<p><strong>Assigned Time:</strong>
+{% if ticket.assigned_at %}
+{{ ticket.assigned_at|date:"M d, Y H:i" }}
+{% else %}
+—
+{% endif %}
+</p>
+
+<hr>
+
+<h3>Lifecycle</h3>
+
+<p><strong>Created:</strong> {{ ticket.created_at|date:"M d, Y H:i" }}</p>
+<p><strong>Resolved:</strong> {{ ticket.resolved_at }}</p>
+<p><strong>Closed:</strong> {{ ticket.closed_at }}</p>
+
+<br><br>
+
+<a href="/staff/admin-panel/">⬅ Back to Dashboard</a>
+
+<hr>
+
+<h3>Activity Timeline</h3>
+
+<ul>
+{% for act in activities %}
+    <li>
+        {{ act.timestamp|date:"M d, Y H:i" }} — {{ act.action }}
+    </li>
+{% empty %}
+    <li>No activity yet</li>
+{% endfor %}
+</ul>
