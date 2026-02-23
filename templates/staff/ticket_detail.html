@@ -1,35 +1,178 @@
-<h2>Ticket {{ ticket.ticket_number }}</h2>
+<!-- ============================= -->
+<!-- STAFF TICKET DETAIL PAGE -->
+<!-- ============================= -->
 
-<hr>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket Detail</title>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .working { background-color: #f0ad4e; }
+        .resolved { background-color: #5cb85c; }
+        .back { background-color: #0275d8; }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Ticket Detail</h2>
+
+<!-- ============================= -->
+<!-- TICKET INFO -->
+<!-- ============================= -->
+<div class="section">
+<h3>Ticket Info</h3>
+
+<p><span class="label">Ticket Number:</span> {{ ticket.ticket_number }}</p>
+<p><span class="label">Status:</span> {{ ticket.status }}</p>
+<p><span class="label">Issue:</span> {{ ticket.issue }}</p>
+<p><span class="label">Sub Issue:</span> {{ ticket.sub_issue }}</p>
+</div>
+
+<!-- ============================= -->
+<!-- COMPANY INFO -->
+<!-- ============================= -->
+<div class="section">
 <h3>Company Info</h3>
-<p><b>Name:</b> {{ ticket.client.org_name }}</p>
-<p><b>Type:</b> {{ ticket.client.company_type }}</p>
-<p><b>Email:</b> {{ ticket.client.email }}</p>
 
-<hr>
+<p><span class="label">Company:</span> {{ ticket.client.org_name }}</p>
+<p><span class="label">Type:</span> {{ ticket.client.company_type }}</p>
+<p><span class="label">Email:</span> {{ ticket.client.email }}</p>
+<p><span class="label">Phone:</span> {{ ticket.client.phone }}</p>
+</div>
 
-<h3>Issue</h3>
-<p><b>Main:</b> {{ ticket.issue }}</p>
-<p><b>Sub:</b> {{ ticket.sub_issue }}</p>
-
-<hr>
-
+<!-- ============================= -->
+<!-- DESCRIPTION -->
+<!-- ============================= -->
+<div class="section">
 <h3>Description</h3>
 <p>{{ ticket.description }}</p>
+</div>
 
-<hr>
+<!-- ============================= -->
+<!-- STATUS ACTIONS -->
+<!-- ============================= -->
+<div class="section">
+<h3>Update Status</h3>
 
-<h3>Status</h3>
-<p>{{ ticket.status }}</p>
+<a class="btn working" href="{% url 'staff_update_status' ticket.id 'WORKING' %}">
+🟡 Start Work
+</a>
 
-<hr>
+<a class="btn resolved" href="{% url 'staff_update_status' ticket.id 'RESOLVED' %}">
+🟢 Resolve
+</a>
 
-<h3>Timeline</h3>
-<p>Created: {{ ticket.created_at }}</p>
-<p>Assigned: {{ ticket.assigned_at }}</p>
-<p>Resolved: {{ ticket.resolved_at }}</p>
-<p>Closed: {{ ticket.closed_at }}</p>
+<p><em>Only admin can close this ticket.</em></p>
+</div>
 
-<br><br>
-<a href="{% url 'staff_dashboard' %}">⬅ Back to Dashboard</a>
+<!-- ============================= -->
+<!-- ASSIGNMENT INFO -->
+<!-- ============================= -->
+<div class="section">
+<h3>Assignment Info</h3>
+
+<p><span class="label">Assigned To:</span>
+{% if ticket.assigned_to %}
+{{ ticket.assigned_to.name }}
+{% else %}
+Not Assigned
+{% endif %}
+</p>
+
+<p><span class="label">Assigned Time:</span>
+{% if ticket.assigned_at %}
+{{ ticket.assigned_at|date:"M d, Y H:i" }}
+{% else %}
+—
+{% endif %}
+</p>
+</div>
+
+<!-- ============================= -->
+<!-- LIFECYCLE -->
+<!-- ============================= -->
+<div class="section">
+<h3>Lifecycle</h3>
+
+<p><span class="label">Created:</span> {{ ticket.created_at|date:"M d, Y H:i" }}</p>
+<p><span class="label">Resolved:</span> {{ ticket.resolved_at }}</p>
+<p><span class="label">Closed:</span> {{ ticket.closed_at }}</p>
+</div>
+
+<!-- ============================= -->
+<!-- BACK BUTTON -->
+<!-- ============================= -->
+<div class="section">
+<a class="btn back" href="{% url 'staff_dashboard' %}">
+⬅ Back to Dashboard
+</a>
+</div>
+
+<!-- ============================= -->
+<!-- ACTIVITY TIMELINE -->
+<!-- ============================= -->
+<div class="section">
+<h3>Activity Timeline</h3>
+
+<ul>
+{% for act in activities %}
+    <li>{{ act.timestamp|date:"M d, Y H:i" }} — {{ act.message }}</li>
+{% empty %}
+    <li>No activity yet</li>
+{% endfor %}
+</ul>
+</div>
+
+</div>
+
+</body>
+</html>

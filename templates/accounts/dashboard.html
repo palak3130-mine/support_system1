@@ -1,7 +1,68 @@
-<h2>Client Dashboard</h2>
+<!-- ============================= -->
+<!-- CLIENT DASHBOARD TEMPLATE -->
+<!-- ============================= -->
 
-<a href="/tickets/create/">Create Ticket</a>
-<br><br>
-<a href="/tickets/track/">Track Ticket</a>
-<br><br>
-<a href="/logout/">Logout</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Dashboard</title>
+
+    <!-- Basic styling -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: block;
+            margin: 10px auto;
+            padding: 12px;
+            width: 200px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .create { background-color: #4CAF50; }
+        .track { background-color: #2196F3; }
+        .logout { background-color: #f44336; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Page Title -->
+    <h2>Client Dashboard</h2>
+
+    <!-- Create Ticket -->
+    <a href="/tickets/create/" class="btn create">Create Ticket</a>
+
+    <!-- Track Ticket -->
+    <a href="/tickets/track/" class="btn track">Track Ticket</a>
+
+    <!-- Logout -->
+    <a href="/logout/" class="btn logout">Logout</a>
+
+</div>
+
+</body>
+</html>

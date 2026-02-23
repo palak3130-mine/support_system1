@@ -1,3 +1,7 @@
+<!-- ============================= -->
+<!-- ADMIN DASHBOARD TEMPLATE -->
+<!-- ============================= -->
+
 <h2>Support Dashboard</h2>
 
 <h3>Statistics</h3>
@@ -10,57 +14,58 @@
     <li>Closed: {{ closed }}</li>
 </ul>
 
-<h3>Recent Tickets</h3>
+<h3>All Tickets</h3>
 
-<table border="1" cellpadding="5">
+<table border="1" cellpadding="6">
 <tr>
-<th>Ticket</th>
-<th>Company</th>
-<th>Type</th>
-<th>Issue</th>
-<th>Description</th>
-<th>Status</th>
-<th>Assigned To</th>
-<th>Created Time</th>
-<th>Assigned Time</th>
+    <th>Ticket</th>
+    <th>Company</th>
+    <th>Type</th>
+    <th>Issue</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Assigned To</th>
+    <th>Created</th>
+    <th>Assigned Time</th>
 </tr>
 
-{% for t in recent %}
+{% for ticket in tickets %}
 <tr>
-<td>
-<a href="/staff/ticket/{{ t.id }}/">
-{{ t.ticket_number }}
-</a>
-</td>
 
-<td>{{ t.client.org_name }}</td>
+    <td>
+        <a href="{% url 'admin_ticket_detail' ticket.id %}">
+            {{ ticket.ticket_number }}
+        </a>
+    </td>
 
-<td>{{ t.client.company_type }}</td>
+    <td>{{ ticket.client.org_name }}</td>
+    <td>{{ ticket.client.company_type }}</td>
+    <td>{{ ticket.issue }}</td>
+    <td>{{ ticket.description }}</td>
+    <td>{{ ticket.status }}</td>
 
-<td>{{ t.issue }}</td>
+    <td>
+        {% if ticket.assigned_to %}
+            {{ ticket.assigned_to.name }}
+        {% else %}
+            Not Assigned
+        {% endif %}
+    </td>
 
-<td>{{ t.description }}</td>
+    <td>{{ ticket.created_at|date:"M d, Y H:i" }}</td>
 
-<td>{{ t.status }}</td>
+    <td>
+        {% if ticket.assigned_at %}
+            {{ ticket.assigned_at|date:"M d, Y H:i" }}
+        {% else %}
+            —
+        {% endif %}
+    </td>
 
-<td>
-{% if t.assigned_to %}
-{{ t.assigned_to.name }}
-{% else %}
-Not Assigned
-{% endif %}
-</td>
-
-<td>{{ t.created_at|date:"M d, Y H:i" }}</td>
-
-<td>
-{% if t.assigned_at %}
-{{ t.assigned_at|date:"M d, Y H:i" }}
-{% else %}
-—
-{% endif %}
-</td>
-
+</tr>
+{% empty %}
+<tr>
+    <td colspan="9">No tickets found</td>
 </tr>
 {% endfor %}
 

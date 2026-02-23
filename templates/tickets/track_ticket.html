@@ -1,3 +1,22 @@
+<!-- ============================= -->
+<!-- TRACK TICKET PAGE -->
+<!-- ============================= -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Track Ticket</title>
+
+    <style>
+        body { font-family: Arial; background:#f4f6f9; padding:40px; }
+        .container { background:white; padding:30px; border-radius:8px; max-width:600px; margin:auto; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
 <h2>Track Ticket</h2>
 
 <form method="POST">
@@ -11,7 +30,9 @@
 {% endif %}
 
 {% if ticket %}
+
 <hr>
+
 <h3>Ticket Details</h3>
 
 <p><strong>Ticket Number:</strong> {{ ticket.ticket_number }}</p>
@@ -32,3 +53,8 @@ Not Assigned
 <p><strong>Resolved At:</strong> {{ ticket.resolved_at }}</p>
 
 {% endif %}
+
+</div>
+
+</body>
+</html>

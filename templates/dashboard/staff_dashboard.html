@@ -1,31 +1,41 @@
+<!-- ============================= -->
+<!-- STAFF DASHBOARD -->
+<!-- ============================= -->
+
 <h2>Welcome {{ staff.name }}</h2>
 
 <a href="/staff/logout/">Logout</a>
 
 <h3>Assigned Tickets</h3>
 
-<table border="1">
-    <tr>
-        <th>Ticket Number</th>
-        <th>Issue</th>
-        <th>Status</th>
-        <th>Description</th>
-    </tr>
+<table border="1" cellpadding="6">
 
-    {% for ticket in tickets %}
-    <tr>
-        <td>
-            <a href="{% url 'staff_ticket_detail' ticket.id %}">
-                {{ ticket.ticket_number }}
-            </a>
-        </td>
-        <td>{{ ticket.issue }}</td>
-        <td>{{ ticket.status }}</td>
-        <td>{{ ticket.description }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">No tickets assigned</td>
-    </tr>
-    {% endfor %}
+<tr>
+    <th>Ticket Number</th>
+    <th>Issue</th>
+    <th>Status</th>
+    <th>Description</th>
+</tr>
+
+{% for ticket in tickets %}
+<tr>
+
+    <td>
+        <a href="{% url 'staff_ticket_detail' ticket.id %}">
+            {{ ticket.ticket_number }}
+        </a>
+    </td>
+
+    <td>{{ ticket.issue }}</td>
+    <td>{{ ticket.status }}</td>
+    <td>{{ ticket.description }}</td>
+
+</tr>
+
+{% empty %}
+<tr>
+    <td colspan="4">No tickets assigned</td>
+</tr>
+{% endfor %}
+
 </table>

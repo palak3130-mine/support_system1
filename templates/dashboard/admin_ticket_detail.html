@@ -1,3 +1,7 @@
+<!-- ============================= -->
+<!-- ADMIN TICKET DETAIL -->
+<!-- ============================= -->
+
 <h2>Ticket Detail</h2>
 
 <hr>
@@ -21,24 +25,23 @@
 <h3>Description</h3>
 <p>{{ ticket.description }}</p>
 
-{% if ticket.status != 'CLOSED' %}
 <hr>
+
 <h3>Update Status</h3>
 
-<a href="/staff/ticket/{{ ticket.id }}/status/IN_PROGRESS/">
+<a href="{% url 'staff_update_status' ticket.id 'WORKING' %}">
 <button>🟡 Start Work</button>
 </a>
 
-<a href="/staff/ticket/{{ ticket.id }}/status/RESOLVED/">
+<a href="{% url 'staff_update_status' ticket.id 'RESOLVED' %}">
 <button>🟢 Resolve</button>
 </a>
 
-<a href="/staff/ticket/{{ ticket.id }}/status/CLOSED/">
-<button>⚫ Close Ticket</button>
+<a href="{% url 'staff_update_status' ticket.id 'CLOSED' %}">
+<button>🔴 Close Ticket</button>
 </a>
-{% else %}
-<p><strong>This ticket is closed and cannot be modified.</strong></p>
-{% endif %}
+
+<p><strong>Note:</strong> Only admin can close ticket.</p>
 
 <hr>
 
@@ -70,7 +73,7 @@ Not Assigned
 
 <br><br>
 
-<a href="/staff/admin-panel/">⬅ Back to Dashboard</a>
+<a href="{% url 'admin_panel' %}">⬅ Back to Dashboard</a>
 
 <hr>
 
@@ -78,9 +81,7 @@ Not Assigned
 
 <ul>
 {% for act in activities %}
-    <li>
-        {{ act.timestamp|date:"M d, Y H:i" }} — {{ act.action }}
-    </li>
+    <li>{{ act.timestamp|date:"M d, Y H:i" }} — {{ act.message }}</li>
 {% empty %}
     <li>No activity yet</li>
 {% endfor %}

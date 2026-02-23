@@ -1,3 +1,7 @@
+<!-- ============================= -->
+<!-- STAFF LOGIN -->
+<!-- ============================= -->
+
 <h2>Staff Login</h2>
 
 {% if error %}
@@ -6,6 +10,10 @@
 
 <form method="POST">
     {% csrf_token %}
-    <input type="email" name="email" placeholder="Enter email">
+
+    <input type="text" name="username" placeholder="Username"><br><br>
+
+    <input type="password" name="password" placeholder="Password"><br><br>
+
     <button type="submit">Login</button>
 </form>
